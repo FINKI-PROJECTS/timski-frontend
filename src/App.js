@@ -1,12 +1,17 @@
-import { useTranslation } from "react-i18next";
+import Layout from "./components/layout/Layout";
+import { Routes, Route } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import NotFound from "./pages/NotFound";
 
 function App() {
-  const { t } = useTranslation();
-
   return (
-    <div className="App">
-      <h1>{t('Hello')}</h1>
-    </div>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Layout>
   );
 }
 
