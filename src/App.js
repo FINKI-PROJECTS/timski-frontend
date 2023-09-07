@@ -1,8 +1,17 @@
+import Layout from "./components/layout/Layout";
+import { Routes, Route } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import NotFound from "./pages/NotFound";
+
 function App() {
   return (
-    <div className="App">
-      <h1>Welcome</h1>
-    </div>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Layout>
   );
 }
 
