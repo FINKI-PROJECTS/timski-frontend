@@ -1,0 +1,25 @@
+@import "../../../global/styles";
+
+.footer {
+  background-image: url("../../../assets/footer-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .text {
+    color: white;
+    margin: 0;
+    font-size: 13px;
+
+    @include small-screen-and-more {
+      font-size: 16px;
+    }
+
+    a {
+      color: white;
+    }
+  }
+}
