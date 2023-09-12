@@ -1,9 +1,26 @@
-import { useTranslation } from "react-i18next";
+import { Fragment, useState } from "react";
+import HomeBanner from "../components/HomeBanner/HomeBanner";
+import Services from "../components/Services/Services";
+
+import { services } from "../global/data";
 
 const HomePage = () => {
-  const { t } = useTranslation();
+  const [searchedServices, setSearchedServices] = useState(services);
 
-  return <div>{t("Hello")}</div>;
+  const searchHandler = (restaurantName) => {
+    const newSearchedRestaurants = services.filter((restaurant) =>
+      restaurant.name.toLowerCase().includes(restaurantName.toLowerCase())
+    );
+
+    setSearchedServices(newSearchedRestaurants);
+  };
+
+  return (
+    <Fragment>
+      <HomeBanner onSearch={searchHandler} />
+      <Services services={searchedServices} />
+    </Fragment>
+  );
 };
 
-export default HomePage;
+export default HomePage; 

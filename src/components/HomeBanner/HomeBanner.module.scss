@@ -1,0 +1,63 @@
+@import "../../global/styles";
+
+.home-banner {
+  background-image: url("../../assets/home-banner-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h1 {
+      font-size: 30px;
+      padding-bottom: 15px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 270px;
+
+      @include small-screen-and-more {
+        width: 450px;
+      }
+
+      input {
+        width: 100%;
+        padding: 15px 20px;
+        border: 1px solid black;
+        border-radius: 15px;
+        background-color: #ffffffd9;
+        background-repeat: no-repeat;
+        background-position: 15px center;
+        font-size: 18px;
+        color: #000;
+        outline: none;
+      }
+
+      button {
+        margin-left: 10px;
+        padding: 15px;
+        border-radius: 20px;
+        border: 0;
+        outline: none;
+        border: 1px solid gray;
+        cursor: pointer;
+        background-color: $secondary-text-color;
+        color: white;
+        width: 120px;
+      }
+    }
+  }
+}

@@ -29,6 +29,9 @@ i18n
           "Create_Account": "Create Account",
           "Create_New_Account": "Create new account",
           "Login_With_Existing_Account": "Login with existing account",
+          "Home_Banner_Text": "Home Banner Text",
+          "Search_Service": "Search Service",
+          "No_Records_Found": "No Records Found",
         }
       },
       mk: {
@@ -49,6 +52,9 @@ i18n
           "Create_Account": "Креирај сметка",
           "Create_New_Account": "Креирај нова сметка",
           "Login_With_Existing_Account": "Најавете се со постоечка сметка",
+          "Home_Banner_Text": "Home Banner Text",
+          "Search_Service": "Search Service",
+          "No_Records_Found": "No Records Found",
         }
       },
       sq: {
@@ -69,6 +75,9 @@ i18n
           "Create_Account": "Krijo llogari",
           "Create_New_Account": "Hapni një llogari të re",
           "Login_With_Existing_Account": "Hyni me llogarinë ekzistuese",
+          "Home_Banner_Text": "Home Banner Text",
+          "Search_Service": "Search Service",
+          "No_Records_Found": "No Records Found",
         }
       }
     },
