@@ -23,51 +23,50 @@ const AuthForm = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-
-    // setIsLoading(true);
-    // let url = "";
-    // if (isLogin) {
-    //   url = "LOGIN_API_END_POINT";
-    // } else {
-    //   url =
-    //   "REGISTER_API_END_POINT";
-    // }
-    // fetch(url, {
-    //   method: "POST",
-    //   body: isLogin
-    //     ? JSON.stringify({
-    //         email: emailInputRef.current.value,
-    //         password: passwordInputRef.current.value,
-    //       })
-    //     : JSON.stringify({
-    //         firstNameInputRef: firstNameInputRef.current.value,
-    //         lastNameInputRef: lastNameInputRef.current.value,
-    //         email: emailInputRef.current.value,
-    //         password: passwordInputRef.current.value,
-    //         phoneNumber: phoneNumberInputRef.current.value,
-    //       }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((res) => {
-    //     setIsLoading(false);
-    //     if (res.ok) {
-    //       return res.json();
-    //     } else {
-    //       return res.json().then((data) => {
-    //         throw new Error(data.error.message);
-    //       });
-    //     }
-    //   })
-    //   .then((data) => {
-    //     if (isLogin) {
-    //       navigate("/admin");
-    //     } else {
-    //       setIsLogin(true);
-    //     }
-    //   })
-    //   .catch((err) => alert(err.message));
+    const apiUrl = process.env.REACT_APP_API_URL + "auth"
+    setIsLoading(true);
+    let url = "";
+    if (isLogin) {
+      url = apiUrl + "/login";
+    } else {
+      url = apiUrl + "/register";
+    }
+    fetch(url, {
+      method: "POST",
+      body: isLogin
+        ? JSON.stringify({
+          email: emailInputRef.current.value,
+          password: passwordInputRef.current.value,
+        })
+        : JSON.stringify({
+          firstName: firstNameInputRef.current.value,
+          lastName: lastNameInputRef.current.value,
+          email: emailInputRef.current.value,
+          password: passwordInputRef.current.value,
+          phoneNumber: phoneNumberInputRef.current.value,
+        }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        setIsLoading(false);
+        if (res.ok) {
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            throw new Error(data.error.message);
+          });
+        }
+      })
+      .then((data) => {
+        if (isLogin) {
+          navigate("/admin");
+        } else {
+          setIsLogin(true);
+        }
+      })
+      .catch((err) => alert(err.message));
   };
 
   return (
