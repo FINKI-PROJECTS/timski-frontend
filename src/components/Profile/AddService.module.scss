@@ -1,0 +1,51 @@
+@import "../../global/styles";
+
+.auth {
+  padding: 1rem;
+  color: black;
+  margin: 10px 50px;
+
+  h1 {
+    font-size: 30px;
+  }
+
+  form {
+    padding: 40px 0 20px;
+
+    .control {
+      margin-bottom: 1.5rem;
+
+      label {
+        color: black;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        font-size: 16px;
+      }
+
+      input, select {
+        font: inherit;
+        background-color: #d2e4ee;
+        border-radius: 4px;
+        border: 1px solid black;
+        width: 25%;
+        padding: 10px
+      }
+    }
+
+    .actions {
+      margin-top: 1.5rem;
+
+      button {
+        cursor: pointer;
+        font: inherit;
+        color: #2480c1;
+        background-color: #2480c1;
+        border: 1px solid #2480c1;
+        color: white;
+        border-radius: 4px;
+        padding: 10px 40px;
+      }
+
+    }
+  }
+}

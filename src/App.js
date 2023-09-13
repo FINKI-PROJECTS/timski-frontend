@@ -4,7 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/AuthPage";
-import AdminPanel from "./pages/AdminPanel";
+import ProfilePage from "./pages/ProfilePage";
+import AddService from "./components/Profile/AddService";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/add-service" element={<AddService />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

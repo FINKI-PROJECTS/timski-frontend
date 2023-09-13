@@ -25,7 +25,7 @@ const MobileHeader = (props) => {
         <Link to="/auth">{t("Login")}</Link>
       </li>
       <li onClick={props.onClose}>
-        <Link to="/admin">{t("Profile")}</Link>
+        <Link to="/profile">{t("Profile")}</Link>
       </li>
       <li style={{ cursor: "pointer" }} onClick={logoutHandler}>
         <Link>{t("Logout")}</Link>
