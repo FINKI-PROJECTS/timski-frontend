@@ -12,7 +12,7 @@ const Service = (props) => {
         <img src={props.thumbnail} alt={props.name} />
         <hr />
         <h2>{props.name}</h2>
-        <h4 onClick={clickHandler}>{props?.createdUser?.fullName}</h4>
+        <h4 style={{ cursor: 'pointer' }} onClick={clickHandler}>{props?.createdUser?.fullName}</h4>
         <p>{props.price} ден</p>
       </div>
     </>
