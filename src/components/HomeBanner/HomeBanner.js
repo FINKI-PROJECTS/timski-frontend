@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import styles from "./HomeBanner.module.scss";
 
-const HomeBanner = ({ onSearch }) => {
+const HomeBanner = ({ onSearch, services }) => {
   const [searchInput, setSearchInput] = useState("");
   const { t } = useTranslation();
 
@@ -12,6 +12,10 @@ const HomeBanner = ({ onSearch }) => {
     onSearch(searchInput);
     setSearchInput("");
   };
+
+  useEffect(() => {
+    onSearch(searchInput);
+  }, [services])
 
   return (
     <div className={styles["home-banner"]}>
