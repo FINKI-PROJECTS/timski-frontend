@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "../Container/index";
 import MobileHeader from "./MobileHeader";
@@ -6,8 +6,10 @@ import MobileHeader from "./MobileHeader";
 import styles from "./Header.module.scss";
 import "./hamburger-menu.css";
 import { useTranslation } from "react-i18next";
+import AuthContext from "../../../context/auth-context";
 
 const Header = () => {
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -25,7 +27,7 @@ const Header = () => {
   };
 
   const logoutHandler = () => {
-    // Logout logic
+    logout();
     navigate("/");
   };
 
@@ -57,15 +59,15 @@ const Header = () => {
                 <li>
                   <Link to="/">{t("Home")}</Link>
                 </li>
-                <li>
+                {!isLoggedIn && <li>
                   <Link to="/auth">{t("Login")}</Link>
-                </li>
-                <li>
+                </li>}
+                {isLoggedIn && <li>
                   <Link to="/profile">{t("Profile")}</Link>
-                </li>
-                <li style={{ cursor: "pointer" }} onClick={logoutHandler}>
-                    <Link>{t("Logout")}</Link>
-                </li>
+                </li>}
+                {isLoggedIn && <li style={{ cursor: "pointer" }} onClick={logoutHandler}>
+                  <Link>{t("Logout")}</Link>
+                </li>}
                 <li>
                   <select
                     className={styles.changeLanguage}
@@ -84,7 +86,7 @@ const Header = () => {
       </header>
 
       {isOpen && <MobileHeader onClose={closeMenuHandler} />}
-    </Fragment>
+    </Fragment >
   );
 };
 

@@ -1,10 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import classes from "./AuthForm.module.scss";
+import AuthContext from "../../context/auth-context";
 
 const AuthForm = () => {
+  const authCtx = useContext(AuthContext);
+
   const firstNameInputRef = useRef();
   const lastNameInputRef = useRef();
   const emailInputRef = useRef();
@@ -23,51 +26,67 @@ const AuthForm = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    const apiUrl = process.env.REACT_APP_API_URL + "auth"
+    setIsLoading(true);
+    let url = "";
+    if (isLogin) {
+      url = apiUrl + "/login";
+    } else {
+      url = apiUrl + "/register";
+    }
+    fetch(url, {
+      method: "POST",
+      body: isLogin
+        ? JSON.stringify({
+          email: emailInputRef.current.value,
+          password: passwordInputRef.current.value,
+        })
+        : JSON.stringify({
+          firstName: firstNameInputRef.current.value,
+          lastName: lastNameInputRef.current.value,
+          email: emailInputRef.current.value,
+          password: passwordInputRef.current.value,
+          phoneNumber: phoneNumberInputRef.current.value,
+        }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        setIsLoading(false);
+        if (res.ok) {
+          return res.json();
+        } else {
+          // Check the content type of the response
+          const contentType = res.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            // Handle JSON error response
+            return res.json().then((data) => {
+              console.log(data);
+              if (data.fieldErrors) {
+                // Map fieldErrors to a single string
+                console.log(data.fieldErrors)
+                const errorMessage = data.fieldErrors.map(err => err.message).join('\n');
+                throw new Error(errorMessage);
+              } else {
+                throw new Error(data.message);
+              }
+            });
+          } else {
+            // Handle plain text error response
+            return res.text().then((text) => {
+              console.log(text);
+              throw new Error(text);
+            });
+          }
+        }
+      })
+      .then((data) => {
+        authCtx.login(data);
+        navigate("/");
+      })
+      .catch((err) => alert(err.message));
 
-    // setIsLoading(true);
-    // let url = "";
-    // if (isLogin) {
-    //   url = "LOGIN_API_END_POINT";
-    // } else {
-    //   url =
-    //   "REGISTER_API_END_POINT";
-    // }
-    // fetch(url, {
-    //   method: "POST",
-    //   body: isLogin
-    //     ? JSON.stringify({
-    //         email: emailInputRef.current.value,
-    //         password: passwordInputRef.current.value,
-    //       })
-    //     : JSON.stringify({
-    //         firstNameInputRef: firstNameInputRef.current.value,
-    //         lastNameInputRef: lastNameInputRef.current.value,
-    //         email: emailInputRef.current.value,
-    //         password: passwordInputRef.current.value,
-    //         phoneNumber: phoneNumberInputRef.current.value,
-    //       }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((res) => {
-    //     setIsLoading(false);
-    //     if (res.ok) {
-    //       return res.json();
-    //     } else {
-    //       return res.json().then((data) => {
-    //         throw new Error(data.error.message);
-    //       });
-    //     }
-    //   })
-    //   .then((data) => {
-    //     if (isLogin) {
-    //       navigate("/admin");
-    //     } else {
-    //       setIsLogin(true);
-    //     }
-    //   })
-    //   .catch((err) => alert(err.message));
   };
 
   return (
