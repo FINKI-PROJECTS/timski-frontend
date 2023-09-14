@@ -57,9 +57,28 @@ const AuthForm = () => {
         if (res.ok) {
           return res.json();
         } else {
-          return res.json().then((data) => {
-            throw new Error(data.error.message);
-          });
+          // Check the content type of the response
+          const contentType = res.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            // Handle JSON error response
+            return res.json().then((data) => {
+              console.log(data);
+              if (data.fieldErrors) {
+                // Map fieldErrors to a single string
+                console.log(data.fieldErrors)
+                const errorMessage = data.fieldErrors.map(err => err.message).join('\n');
+                throw new Error(errorMessage);
+              } else {
+                throw new Error(data.message);
+              }
+            });
+          } else {
+            // Handle plain text error response
+            return res.text().then((text) => {
+              console.log(text);
+              throw new Error(text);
+            });
+          }
         }
       })
       .then((data) => {
@@ -67,6 +86,7 @@ const AuthForm = () => {
         navigate("/");
       })
       .catch((err) => alert(err.message));
+
   };
 
   return (
