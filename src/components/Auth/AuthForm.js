@@ -1,10 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import classes from "./AuthForm.module.scss";
+import AuthContext from "../../context/auth-context";
 
 const AuthForm = () => {
+  const authCtx = useContext(AuthContext);
+
   const firstNameInputRef = useRef();
   const lastNameInputRef = useRef();
   const emailInputRef = useRef();
@@ -60,11 +63,8 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        if (isLogin) {
-          navigate("/admin");
-        } else {
-          setIsLogin(true);
-        }
+        authCtx.login(data);
+        navigate("/");
       })
       .catch((err) => alert(err.message));
   };
