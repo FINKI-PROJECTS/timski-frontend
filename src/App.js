@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/AuthPage";
 import ProfilePage from "./pages/ProfilePage";
 import AddService from "./components/Profile/AddService";
+import ServiceDetailsPage from "./pages/ServiceDetailsPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/profile/:userId" element={<ProfilePage />} />
         <Route path="/profile/add-service" element={<AddService />} />
+        <Route path="/service/:serviceId" element={<ServiceDetailsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
