@@ -1,30 +1,34 @@
 export const categories = [
   {
-    id: 'c0',
-    name: '',
+    id: "c0",
+    name: "",
   },
   {
     id: "c1",
-    name: "Pizza",
+    name: "Tiler",
   },
   {
     id: "c2",
-    name: "Pasta",
+    name: "Plumber",
   },
   {
     id: "c3",
-    name: "Burgers",
+    name: "Electrician",
   },
   {
     id: "c4",
-    name: "Meals",
+    name: "Carpenter",
   },
   {
     id: "c5",
-    name: "Drinks",
+    name: "Mason",
   },
   {
     id: "c6",
-    name: "Dessert",
+    name: "Painter",
+  },
+  {
+    id: "c7",
+    name: "Other",
   },
 ];
