@@ -7,61 +7,12 @@ import { Container } from "../layout/Container";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/auth-context";
 
-const fourLastServices = [
-  {
-    postId: 1,
-    name: "Updated Post Name",
-    price: "55.00",
-    thumbnail: "https://example.com/newimage.jpg",
-    description: "<p>This is an updated HTML description.</p>",
-    category: "Updated Category",
-    createdUser: {
-      id: 2,
-      fullName: "Jeton 1 R",
-    },
-  },
-  {
-    postId: 1,
-    name: "Updated Post Name",
-    price: "55.00",
-    thumbnail: "https://example.com/newimage.jpg",
-    description: "<p>This is an updated HTML description.</p>",
-    category: "Updated Category",
-    createdUser: {
-      id: 2,
-      fullName: "Jeton 1 R",
-    },
-  },
-  {
-    postId: 1,
-    name: "Updated Post Name",
-    price: "55.00",
-    thumbnail: "https://example.com/newimage.jpg",
-    description: "<p>This is an updated HTML description.</p>",
-    category: "Updated Category",
-    createdUser: {
-      id: 2,
-      fullName: "Jeton 1 R",
-    },
-  },
-  {
-    postId: 1,
-    name: "Updated Post Name",
-    price: "55.00",
-    thumbnail: "https://example.com/newimage.jpg",
-    description: "<p>This is an updated HTML description.</p>",
-    category: "Updated Category",
-    createdUser: {
-      id: 2,
-      fullName: "Jeton 1 R",
-    },
-  },
-];
 
 const ServiceDetails = () => {
   const { serviceId } = useParams();
   const authCtx = useContext(AuthContext);
   const [service, setService] = useState({});
+  const [fourLastServices, setFourLastServices] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -95,7 +46,8 @@ const ServiceDetails = () => {
       })
       .then((data) => {
         // setServices(data.posts);
-        setService(data);
+        setService(data.post);
+        setFourLastServices(data.otherPosts);
       })
       .catch((err) => {
         navigate("/");
@@ -143,7 +95,7 @@ const ServiceDetails = () => {
               <span style={{ backgroundColor: 'rgb(217, 237, 86)' }}>{service.category}</span>
               <span style={{ backgroundColor: '#81c6db' }}>User: {service?.createdUser?.fullName}</span>
               <span>Price: {service.price} den</span>
-              <button className={styles["button-ripple"]} onClick={getPaymentLink}>Pay</button>
+              {authCtx.token.access && <button className={styles["button-ripple"]} onClick={getPaymentLink}>Pay</button>}
             </div>
           </div>
           <div className={styles.description}>

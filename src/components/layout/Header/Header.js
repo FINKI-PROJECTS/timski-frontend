@@ -37,7 +37,7 @@ const Header = () => {
         <Container>
           <div className={styles.header}>
             <Link to="/">
-              <h2>Majstori</h2>
+              <h2>Workers</h2>
             </Link>
 
             <nav className={styles.nav}>
