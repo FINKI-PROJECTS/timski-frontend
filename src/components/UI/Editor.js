@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./styles.css";
@@ -17,9 +17,13 @@ const modules = {
   ],
 };
 
-const Editor = () => {
+const Editor = (props) => {
   const [value, setValue] = useState("");
-  console.log(value);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => { props.onChange(value) }, 100);
+    return () => clearTimeout(timeout);
+  }, [value])
 
   return (
     <ReactQuill

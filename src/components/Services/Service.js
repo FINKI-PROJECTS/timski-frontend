@@ -3,12 +3,16 @@ import styles from "./Service.module.scss";
 
 const Service = (props) => {
   const naviagte = useNavigate();
-  const clickHandler = () => {
+  const clickHandler = (e) => {
+    e.stopPropagation();
     naviagte(`/profile/${props.createdUser.id}`)
+  }
+  const serviceClickHandler = () => {
+    naviagte(`/service/${props.postId}`)
   }
   return (
     <>
-      <div className={styles["service-card"]}>
+      <div className={styles["service-card"]} onClick={serviceClickHandler} style={{ cursor: 'pointer' }}>
         <img src={props.thumbnail} alt={props.name} />
         <hr />
         <h2>{props.name}</h2>

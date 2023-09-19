@@ -3,10 +3,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./Profile.module.scss";
 import Services from "../Services/Services";
 import { categories } from "../../global/data";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../../context/auth-context";
 
 const Profile = () => {
   const [services, setServices] = useState([]);
+  const { user: ctxUser } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const [filteredServices, setFilteredServices] = useState(services);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -48,7 +50,7 @@ const Profile = () => {
 
   const filterServicesHandler = (categoryName) => {
     const newFilteredFoods = categoryName ? services.filter(
-      (service) => service.category === categoryName
+      (service) => service?.category.startsWith(categoryName)
     ) : services;
     setFilteredServices(newFilteredFoods);
     setSelectedCategory(categoryName);
@@ -75,12 +77,12 @@ const Profile = () => {
         ))}
       </div>
 
-      <Link to="/profile/add-service" className={styles.addService}>
+      {ctxUser && user.id === ctxUser.id && <Link to="/profile/add-service" className={styles.addService}>
         Add Service
-      </Link>
+      </Link>}
 
       <Services services={filteredServices} />
-    </div>
+    </div >
   );
 };
 

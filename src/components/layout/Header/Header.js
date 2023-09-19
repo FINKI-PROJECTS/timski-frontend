@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import AuthContext from "../../../context/auth-context";
 
 const Header = () => {
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout, user } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const Header = () => {
                   <Link to="/auth">{t("Login")}</Link>
                 </li>}
                 {isLoggedIn && <li>
-                  <Link to="/profile">{t("Profile")}</Link>
+                  <Link to={`/profile/${user.id}`}>{t("Profile")}</Link>
                 </li>}
                 {isLoggedIn && <li style={{ cursor: "pointer" }} onClick={logoutHandler}>
                   <Link>{t("Logout")}</Link>

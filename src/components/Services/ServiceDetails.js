@@ -1,9 +1,10 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import styles from "./ServiceDetails.module.scss";
 import Services from "../Services/Services";
 import image from "../../assets/home-banner-bg.jpg";
 import { Container } from "../layout/Container";
+import { useEffect, useState } from "react";
 
 const fourLastServices = [
   {
@@ -58,133 +59,61 @@ const fourLastServices = [
 
 const ServiceDetails = () => {
   const { serviceId } = useParams();
+  const [service, setService] = useState({});
+  const navigate = useNavigate();
 
-  console.log(serviceId);
+  useEffect(() => {
+    if (!serviceId) {
+      alert("Service doesn't exist.");
+      navigate("/");
+      return;
+    }
+    const url = process.env.REACT_APP_API_URL + "posts/getById/" + serviceId;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            throw new Error(data?.message);
+          });
+        }
+      })
+      .then((data) => {
+        // setServices(data.posts);
+        setService(data);
+      })
+      .catch((err) => {
+        navigate("/");
+        alert(err.message)
+      });
+  }, [])
 
   return (
     <div className={styles.serviceDetails}>
       <div className={styles["service-details-banner"]}>
-        <img src={image} alt='Test' className={styles.thumbnail} />
+        <img src={service.thumbnail ?? image} alt='Test' className={styles.thumbnail} />
       </div>
       <Container>
         <div className={styles.content}>
           <div className={styles.info}>
-            <h2>Service Title</h2>
+            <h2>{service.name}</h2>
             <div>
-              <span style={{ backgroundColor: 'rgb(217, 237, 86)' }}>Category Name</span>
-              <span style={{ backgroundColor: '#81c6db' }}>User: Jeton Ramadani</span>
-              <span>Price: 1500 den</span>
+              <span style={{ backgroundColor: 'rgb(217, 237, 86)' }}>{service.category}</span>
+              <span style={{ backgroundColor: '#81c6db' }}>User: {service?.createdUser?.fullName}</span>
+              <span>Price: {service.price} den</span>
             </div>
           </div>
           <div className={styles.description}>
-            <article>
-            <h2>How to Create the Perfect Dummy Blog Post</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                euismod quam a diam efficitur, sed eleifend urna fringilla.
-                Nulla facilisi. Nulla facilisi. Nam a libero ac nisi fermentum
-                malesuada non eget lectus.
-              </p>
-              <p>
-                In this article, we'll explore the art of crafting the ideal
-                dummy blog post. From choosing the right title to formatting
-                your content, you'll learn all the tricks of the trade. So,
-                let's get started!
-              </p>
-              <h3>Choosing an Engaging Title</h3>
-              <p>
-                The title of your blog post is the first thing readers see, so
-                make it attention-grabbing and relevant to your content. Don't
-                forget to use keywords for SEO!
-              </p>
-              <h3>Structuring Your Content</h3>
-              <p>
-                Organize your content into sections with clear headings. Use
-                paragraphs, lists, and images to break up the text and make it
-                more readable.
-              </p>
-              <h3>Adding Images</h3>
-              <p>
-                Images can enhance your blog post. Include high-quality visuals
-                that relate to your topic and don't forget to add alt text for
-                accessibility.
-              </p>
-              <h3>Conclusion</h3>
-              <p>
-                Wrap up your blog post with a summary of key points. Encourage
-                readers to leave comments and share your post on social media.
-              </p><h2>How to Create the Perfect Dummy Blog Post</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                euismod quam a diam efficitur, sed eleifend urna fringilla.
-                Nulla facilisi. Nulla facilisi. Nam a libero ac nisi fermentum
-                malesuada non eget lectus.
-              </p>
-              <p>
-                In this article, we'll explore the art of crafting the ideal
-                dummy blog post. From choosing the right title to formatting
-                your content, you'll learn all the tricks of the trade. So,
-                let's get started!
-              </p>
-              <h3>Choosing an Engaging Title</h3>
-              <p>
-                The title of your blog post is the first thing readers see, so
-                make it attention-grabbing and relevant to your content. Don't
-                forget to use keywords for SEO!
-              </p>
-              <h3>Structuring Your Content</h3>
-              <p>
-                Organize your content into sections with clear headings. Use
-                paragraphs, lists, and images to break up the text and make it
-                more readable.
-              </p>
-              <h3>Adding Images</h3>
-              <p>
-                Images can enhance your blog post. Include high-quality visuals
-                that relate to your topic and don't forget to add alt text for
-                accessibility.
-              </p>
-              <h3>Conclusion</h3>
-              <p>
-                Wrap up your blog post with a summary of key points. Encourage
-                readers to leave comments and share your post on social media.
-              </p><h2>How to Create the Perfect Dummy Blog Post</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                euismod quam a diam efficitur, sed eleifend urna fringilla.
-                Nulla facilisi. Nulla facilisi. Nam a libero ac nisi fermentum
-                malesuada non eget lectus.
-              </p>
-              <p>
-                In this article, we'll explore the art of crafting the ideal
-                dummy blog post. From choosing the right title to formatting
-                your content, you'll learn all the tricks of the trade. So,
-                let's get started!
-              </p>
-              <h3>Choosing an Engaging Title</h3>
-              <p>
-                The title of your blog post is the first thing readers see, so
-                make it attention-grabbing and relevant to your content. Don't
-                forget to use keywords for SEO!
-              </p>
-              <h3>Structuring Your Content</h3>
-              <p>
-                Organize your content into sections with clear headings. Use
-                paragraphs, lists, and images to break up the text and make it
-                more readable.
-              </p>
-              <h3>Adding Images</h3>
-              <p>
-                Images can enhance your blog post. Include high-quality visuals
-                that relate to your topic and don't forget to add alt text for
-                accessibility.
-              </p>
-              <h3>Conclusion</h3>
-              <p>
-                Wrap up your blog post with a summary of key points. Encourage
-                readers to leave comments and share your post on social media.
-              </p>
-            </article>
+            <article className={styles.display_content} dangerouslySetInnerHTML={
+              { __html: service.description ?? "" }
+            }></article>
+
           </div>
         </div>
 
